@@ -1,0 +1,26 @@
+# Run MySQL in a docker container
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -p 3309:3306 -d mysql:latest
+
+# Connect to the running container
+# docker exec -it mysql bash
+# mysql -u root -p
+
+# If you have mysql cli installed, connect from the docker host
+mysql -h localhost -P 3306 --protocol=tcp -u root -p
+
+# Create the db table, and sample data
+SHOW DATABASES;
+CREATE DATABASE demo;
+USE demo
+SHOW TABLES;
+CREATE TABLE device (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    description VARCHAR(255),
+    firmware_version INT,
+    network_quality INT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+# DESCRIBE device;
+
+INSERT INTO device (description, firmware_version, network_quality) VALUES ('Washing Machine',1,100);
+INSERT INTO device (description, firmware_version, network_quality) VALUES ('Fridge',1,75);
